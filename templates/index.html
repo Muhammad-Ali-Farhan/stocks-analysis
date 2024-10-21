@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="content">
+            <h1>Stock Market Analysis Dashboard</h1>
+            <form id="newsForm">
+                <input type="text" name="symbol" placeholder="Enter stock symbol (e.g., AAPL)" required>
+                <button type="submit">Fetch News</button>
+            </form>
+            <div id="newsResults"></div>
+            <div id="graph-container">
+            </div>
+        </div>
+    </div>
+
+    <script>
+    
+        document.getElementById('newsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const symbol = this.symbol.value;
+            fetch('/fetch_news', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    symbol: symbol
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const newsResults = document.getElementById('newsResults');
+                newsResults.innerHTML = '';  
+                data.forEach(article => {
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-item';
+                    newsItem.innerHTML = `<strong>${article.headline}</strong><br><small>${article.datetime}</small><br><a href="${article.url}" target="_blank">Read more</a>`;
+                    newsResults.appendChild(newsItem);
+                });
+            })
+            .catch(error => {
+                document.getElementById('newsResults').innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        });
+    </script>
+
+</body>
+</html>
