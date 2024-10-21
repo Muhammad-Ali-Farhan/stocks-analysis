@@ -7,8 +7,12 @@ from flask import Flask, render_template
 from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
+from dotenv import load_dotenv
+import os
+load_dotenv()
+FINNHUB_API_KEY = os.getenv('FINNHUB_API_KEY')
 
-FINNHUB_API_KEY = "cs8mhopr01qu0vk4fci0cs8mhopr01qu0vk4fcig"
+
 
 
 
