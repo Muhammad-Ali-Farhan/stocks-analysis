@@ -3,8 +3,10 @@ import yfinance as yf
 import pandas as pd
 from textblob import TextBlob
 from datetime import datetime, timedelta
-
-FINNHUB_API_KEY = "cs8mhopr01qu0vk4fci0cs8mhopr01qu0vk4fcig"
+from dotenv import load_dotenv
+import os
+load_dotenv()
+FINNHUB_API_KEY = os.getenv('FINNHUB_API_KEY')
 
 def get_stock_data(symbol, period="1y"):
     stock = yf.Ticker(symbol)
