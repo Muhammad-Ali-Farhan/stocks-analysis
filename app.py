@@ -9,6 +9,10 @@ from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 from dotenv import load_dotenv
 import os
+
+port = int(os.environ.get("PORT", 3000)) 
+app.run(host='0.0.0.0', port=port)
+
 load_dotenv()
 FINNHUB_API_KEY = os.getenv('FINNHUB_API_KEY')
 
