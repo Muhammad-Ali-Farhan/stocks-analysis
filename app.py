@@ -10,13 +10,17 @@ import plotly.graph_objs as go
 from dotenv import load_dotenv
 import os
 
+server = Flask(__name__)
+app = Dash(__name__, server=server, url_base_pathname='/dashboard/')
+
+
 port = int(os.environ.get("PORT", 3000)) 
 app.run(host='0.0.0.0', port=port)
 
 load_dotenv()
+
+
 FINNHUB_API_KEY = os.getenv('FINNHUB_API_KEY')
-
-
 
 
 
@@ -92,8 +96,6 @@ def calculate_rsi(df, window=14):
     return df
 
 
-server = Flask(__name__)
-app = Dash(__name__, server=server, url_base_pathname='/dashboard/')
 
 
 app.layout = html.Div(
@@ -291,7 +293,7 @@ from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 
-FINNHUB_API_KEY = "cs8mhopr01qu0vk4fci0cs8mhopr01qu0vk4fcig"
+
 
 
 
