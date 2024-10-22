@@ -9,6 +9,10 @@ from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
+
+
+
 
 load_dotenv()
 FINNHUB_API_KEY = os.getenv('FINNHUB_API_KEY')
@@ -84,6 +88,7 @@ def calculate_macd(df):
 
 server = Flask(__name__)
 app = Dash(__name__, server=server, url_base_pathname='/dashboard/')
+CORS(server)
 
 app.layout = html.Div(
     style={
